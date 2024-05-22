@@ -7,6 +7,12 @@
   pointer-events: none;
 }
 
+.autor {
+  color:rgb(228, 54, 83);
+}
+
+
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
