@@ -1,49 +1,109 @@
-
 import './App.css';
+import './App.js';
+import './Lemmikraamatud';
+
+import Lemmikraamatud2 from './Lemmikraamatud2.js';
 import Lemmikraamatud from './Lemmikraamatud';
-import RaamatuPilt1 from './jaapan.jpg'
-import RaamatuPilt2 from './MinuDubai_Big (1) (1).webp'
-import RaamatuPilt3 from './USA.jpg'
-import RaamatuPilt4 from './minu_tai.jpg'
-import RaamatuPilt5 from './Läti.webp'
-import RaamatuPilt6 from './hispaania.jpg'
-
-
+import RaamatuPilt4 from './minu_tai.jpg';
+import RaamatuPilt5 from './Läti.webp';
+import RaamatuPilt6 from './hispaania.jpg';
+import { useState } from 'react';
+import Counter from './Counter.js';
+import Ostukorv from './Ostukorv';
+import UusOst from './UusOst';
 
 const moreLemmikraamatud = [
   {
     nimi: 'Minu Tai',
     autor: 'Mai Loog',
-    pilt: {RaamatuPilt4}
+    pilt: RaamatuPilt4
   },
-
   {
     nimi: 'Minu Läti',
     autor: 'Contra',
-    pilt: {RaamatuPilt5}
+    pilt: RaamatuPilt5
   },
-
   {
     nimi: 'Minu Hispaania',
     autor: 'Anna-Maria Penu',
-    pilt: {RaamatuPilt6}
+    pilt: RaamatuPilt6
   }
-]
-  function App() {
-    const moreLemmikraamatudJsx = moreLemmikraamatud.map((raamat) => <Lemmikraamatud nimi={raamat.nimi} autor={raamat.autor} />)
+];
 
+function App() {
+  const [activeRaamat, setActiveRaamat] = useState(0);
+  const [ostud, setOstud] = useState([
+    { nimetus: 'Raamat', yhik: 'tk', kogus: 1, hind: '€', korvis: true },
+
+  ]);
+
+  const toggleKasKorvis = (index) => {
+    console.log('Klikiti real ' + index);
+    const uusMassiiv = ostud.map((ost, i) => {
+      if (index !== i) {
+        return ost;
+      }
+      return { ...ost, korvis: !ost.korvis };
+    });
+
+    setOstud(uusMassiiv);
+  };
+
+
+  const lisaToode = (nimetus, kogus, yhik, hind) => {
+    const uusToode = {
+      nimetus,
+      yhik,
+      kogus,
+      hind,
+      korvis: false
+    };
+    console.log(uusToode);
+    setOstud([...ostud, uusToode]);
+  };
+
+  const handlePrevious = () => {
+    setActiveRaamat((prev) => Math.max(prev - 1, 0));
+  };
+
+  const handleNext = () => {
+    setActiveRaamat((prev) => Math.min(prev + 1, moreLemmikraamatud.length - 1));
+  };
+
+
+  const moreLemmikraamatudJsx = moreLemmikraamatud.map((raamat, index) => (
+    <Lemmikraamatud2 key={index} nimi={raamat.nimi} pilt={raamat.pilt} autor={raamat.autor} />
+  ));
 
   return (
     <div className="App">
-      <h1> Minu lemmikraamatud</h1>
-      <Lemmikraamatud nimi="Minu Jaapan" autor="Maret Nukke" pilt={RaamatuPilt1} />
-      <Lemmikraamatud nimi="Minu Dubai" autor="Susan Luitsalu" markused="adshhjjakkka" pilt={RaamatuPilt2} />
-      <Lemmikraamatud nimi="Minu Ameerika" autor="Epp Petrone" markused="adshhjjakkka" pilt={RaamatuPilt3} />
-      {moreLemmikraamatudJsx}
+      <h1>Minu lemmikraamatud</h1>
+      <div className='container'>
+        <div className="leftPane">
+          {moreLemmikraamatudJsx}
 
+          <button onClick={handlePrevious} disabled={activeRaamat === 0}>Previous</button>
+          <button onClick={handleNext} disabled={activeRaamat === moreLemmikraamatud.length - 1}>Next Page</button>
+
+          <UusOst lisaToode={lisaToode} />
+          <Ostukorv ostud={ostud} toggleKasKorvis={toggleKasKorvis} />
+          <h4>Ostukorvis on {ostud.filter(ost => ost.korvis).length} toodet</h4>
+        </div>
+
+        <div className='rightPane'>
+          <Lemmikraamatud
+            nimi={moreLemmikraamatud[activeRaamat].nimi}
+            autor={moreLemmikraamatud[activeRaamat].autor}
+            pilt={moreLemmikraamatud[activeRaamat].pilt}
+          />
+          <Counter />
+
+        </div>
+      </div>
     </div>
 
   );
 }
 
 export default App;
+

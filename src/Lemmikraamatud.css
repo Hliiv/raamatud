@@ -1,0 +1,44 @@
+
+  .nimi {
+    color:blueviolet;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  
+
+  
+  .img-fluid {
+
+    max-width: 100%;
+    height: 30px;
+    size: 30px;
+  }
+
+  h1 {
+    color:rgb(121, 22, 174);
+    font-family:'Courier New', Courier, monospace;
+    font-weight: bold;
+    
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .leftPane, .rightPane {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .leftPane {
+    border-right: 1px solid #ccc;
+  }
+  
+  .rightPane {
+    border-left: 1px solid #ccc;
+  }
+  
+  .App h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
