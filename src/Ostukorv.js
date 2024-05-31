@@ -11,10 +11,10 @@ function Ostukorv({ ostud, toggleKasKorvis }) {
                                 defaultChecked={ost.korvis}
                                 onChange={() => toggleKasKorvis(index)}
                             />
-                            <div className="col-3">{ost.nimetus}</div>
+                            <div className="col-1">{ost.nimetus}</div>
                             <div className="col-2">{ost.kogus}</div>
                             <div className="col-2">{ost.yhik}</div>
-                            <div className ="col-3">{ost.hind}</div>
+                            <div className ="col-2">{ost.hind}</div>
                         </div>
                     )
                 })

@@ -69,10 +69,16 @@ function App() {
   const handleNext = () => {
     setActiveRaamat((prev) => Math.min(prev + 1, moreLemmikraamatud.length - 1));
   };
-
+  
+  const handleClick = (index) => {
+    console.log(`click on book nr ${index}`);
+    setActiveRaamat(index);
+  };
 
   const moreLemmikraamatudJsx = moreLemmikraamatud.map((raamat, index) => (
+    <div onClick={() => handleClick(index)} className="book-item">
     <Lemmikraamatud2 key={index} nimi={raamat.nimi} pilt={raamat.pilt} autor={raamat.autor} />
+  </div>
   ));
 
   return (
@@ -82,9 +88,10 @@ function App() {
         <div className="leftPane">
           {moreLemmikraamatudJsx}
 
-          <button onClick={handlePrevious} disabled={activeRaamat === 0}>Previous</button>
-          <button onClick={handleNext} disabled={activeRaamat === moreLemmikraamatud.length - 1}>Next Page</button>
-
+          <div className="navigation">
+            <button onClick={handlePrevious} disabled={activeRaamat === 0}>Previous</button>
+            <button onClick={handleNext} disabled={activeRaamat === moreLemmikraamatud.length - 1}>Next Page</button>
+          </div>
           <UusOst lisaToode={lisaToode} />
           <Ostukorv ostud={ostud} toggleKasKorvis={toggleKasKorvis} />
           <h4>Ostukorvis on {ostud.filter(ost => ost.korvis).length} toodet</h4>
@@ -106,4 +113,3 @@ function App() {
 }
 
 export default App;
-
